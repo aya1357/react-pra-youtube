@@ -1,6 +1,7 @@
 import "./App.css";
-import { useEffect, useState, useContext, useRef, useReducer, useMemo } from "react";
+import { useEffect, useState, useContext, useRef, useReducer, useMemo, useCallback } from "react";
 import ShincodeContext from "./main.jsx";
+import SomeChild from "./SomeChild";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -45,6 +46,17 @@ function App() {
   //   return count02 * count02;
   // }
 
+  // useCallBack
+  const [counter, setCounter] = useState(0);
+
+  // const showCount = () => {
+  //   alert("これは重い処理です。")
+  // }
+
+  const showCount = useCallback(() => {
+    alert("これは重い処理です。");
+  }, [counter]);
+
   const square = useMemo(() => {
     let i = 0;
     while (i < 200000000) {
@@ -72,8 +84,8 @@ function App() {
       <hr />
       <h1>useReducer</h1>
       <p>カウント: {state}</p>
-      <button onClick={() => dispatch({type: "increment"})}>+</button>
-      <button onClick={() => dispatch({type: "decriment"})}>-</button>
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
+      <button onClick={() => dispatch({ type: "decriment" })}>-</button>
 
       <hr />
       <h1>useMemo</h1>
@@ -82,6 +94,10 @@ function App() {
       <div>結果 : {square}</div>
       <button onClick={() => setCount01(count01 + 1)}>+</button>
       <button onClick={() => setCount02(count01 + 1)}>+</button>
+
+      <hr />
+      <h1>useCallBack</h1>
+      <SomeChild showCount={showCount} />
     </div>
   );
 }
