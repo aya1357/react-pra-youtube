@@ -1,8 +1,10 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import ShincodeContext from "./main.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
+  const shincodeInfo = useContext(ShincodeContext);
 
   let handleClick = () => {
     setCount(count + 1);
@@ -15,9 +17,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1>UseState, useEffect</h1>
+      <h1>useState, useEffect</h1>
       <button onClick={handleClick}>+</button>
       <p>{count}</p>
+
+      <hr />
+      <h1>useContext</h1>
+      <p>{shincodeInfo.name}</p>
+      <p>{shincodeInfo.age}</p>
     </div>
   );
 }
