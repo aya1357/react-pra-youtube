@@ -1,11 +1,23 @@
 import "./App.css";
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext, useRef, useReducer } from "react";
 import ShincodeContext from "./main.jsx";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "increment":
+      return state + 1;
+    case "decriment":
+      return state - 1;
+    default:
+      return state;
+  }
+};
 
 function App() {
   const [count, setCount] = useState(0);
   const shincodeInfo = useContext(ShincodeContext);
   const ref = useRef();
+  const [state, dispatch] = useReducer(reducer, 0);
 
   let handleClick = () => {
     setCount(count + 1);
@@ -17,8 +29,8 @@ function App() {
   }, [count]);
 
   const handleRef = () => {
-    console.log(ref.current.value)
-    console.log(ref.current.offsetHeight)
+    console.log(ref.current.value);
+    console.log(ref.current.offsetHeight);
   };
 
   return (
@@ -36,6 +48,12 @@ function App() {
       <h1>useRef</h1>
       <input type="text" ref={ref} />
       <button onClick={handleRef}>UseRef</button>
+
+      <hr />
+      <h1>useReducer</h1>
+      <p>カウント: {state}</p>
+      <button onClick={() => dispatch({type: "increment"})}>+</button>
+      <button onClick={() => dispatch({type: "decriment"})}>-</button>
     </div>
   );
 }
