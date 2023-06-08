@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState, useContext, useRef, useReducer } from "react";
+import { useEffect, useState, useContext, useRef, useReducer, useMemo } from "react";
 import ShincodeContext from "./main.jsx";
 
 const reducer = (state, action) => {
@@ -33,6 +33,26 @@ function App() {
     console.log(ref.current.offsetHeight);
   };
 
+  // useMemo
+  const [count01, setCount01] = useState(0);
+  const [count02, setCount02] = useState(0);
+
+  // const square = () => {
+  //   let i = 0;
+  //   while (i < 2000000000) {
+  //     i++;
+  //   }
+  //   return count02 * count02;
+  // }
+
+  const square = useMemo(() => {
+    let i = 0;
+    while (i < 200000000) {
+      i++;
+    }
+    return count02 * count02;
+  }, [count02])
+
   return (
     <div className="App">
       <h1>useState, useEffect</h1>
@@ -54,6 +74,14 @@ function App() {
       <p>カウント: {state}</p>
       <button onClick={() => dispatch({type: "increment"})}>+</button>
       <button onClick={() => dispatch({type: "decriment"})}>-</button>
+
+      <hr />
+      <h1>useMemo</h1>
+      <div>カウント1 : {count01}</div>
+      <div>カウント1 : {count02}</div>
+      <div>結果 : {square}</div>
+      <button onClick={() => setCount01(count01 + 1)}>+</button>
+      <button onClick={() => setCount02(count01 + 1)}>+</button>
     </div>
   );
 }
