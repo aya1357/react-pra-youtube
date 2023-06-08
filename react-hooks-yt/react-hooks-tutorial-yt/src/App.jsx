@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,9 +8,14 @@ function App() {
     setCount(count + 1);
   };
 
+  useEffect(() => {
+    console.log("useEffect");
+    // setCount(count + 1);
+  }, [count])
+
   return (
     <div className="App">
-      <h1>UseState</h1>
+      <h1>UseState, useEffect</h1>
       <button onClick={handleClick}>+</button>
       <p>{count}</p>
     </div>
