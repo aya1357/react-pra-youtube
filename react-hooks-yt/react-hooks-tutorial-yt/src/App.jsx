@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState, useContext, useRef, useReducer, useMemo, useCallback } from "react";
 import ShincodeContext from "./main.jsx";
 import SomeChild from "./SomeChild";
+import useLocalStorage from "./useLocalStorage";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -57,6 +58,9 @@ function App() {
     alert("これは重い処理です。");
   }, [counter]);
 
+  // カスタムフック
+  const [age, setAge] = useLocalStorage("age", 24);
+
   const square = useMemo(() => {
     let i = 0;
     while (i < 200000000) {
@@ -98,6 +102,11 @@ function App() {
       <hr />
       <h1>useCallBack</h1>
       <SomeChild showCount={showCount} />
+
+      <hr />
+      <h1>カスタムフック</h1>
+      <p>{age}</p>
+      <button onClick={() => setAge(80)}>年齢をセット</button>
     </div>
   );
 }
